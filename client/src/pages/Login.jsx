@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Alert, Card } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import authService from '../services/auth';
+import { useAuth } from '../context/AuthContext';
 import '../styles/style.css'; 
 
 export default function Login() {
@@ -9,16 +9,15 @@ export default function Login() {
   const [motDePasse, setMotDePasse] = useState('');
   const [erreur, setErreur] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await authService.login({ email, password: motDePasse });
-      console.log('Connexion réussie :', data);
+      await login({ email, password: motDePasse });
       navigate('/dashboard');
     } catch (err) {
-      console.error('Erreur lors de la connexion :', err.message);
-      setErreur(err.message);
+      setErreur(err.message || 'Erreur de connexion');
     }
   };
 

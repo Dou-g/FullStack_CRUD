@@ -1,119 +1,172 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import productService from '../services/productService';
 
 const categories = ['Huile', 'Légumes', 'Produits laitiers', 'Épicerie', 'Riz', 'Eau Minérale', 'Sucre', 'Boisson'];
 
 export default function ProductForm() {
-  const { id } = useParams(); // Récupère l'ID du produit depuis l'URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     nom: '',
-    categorie: '',
+    categorie: categories[0],
     prix: 0,
     quantite: 0,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  // Charger les données du produit si un ID est présent
   useEffect(() => {
     if (id) {
       const loadProduct = async () => {
+        setLoading(true);
         try {
           const produits = await productService.getProduits();
-          const foundProduct = produits.find(p => p._id === parseInt(id));
-          if (foundProduct) setProduct(foundProduct);
+          const foundProduct = produits.find(p => p._id === id);
+          if (foundProduct) {
+            setProduct({
+              ...foundProduct,
+              prix: parseFloat(foundProduct.prix),
+              quantite: parseFloat(foundProduct.quantite)
+            });
+          }
         } catch (error) {
-          console.error('Erreur lors du chargement du produit :', error);
+          setError('Erreur lors du chargement du produit');
+        } finally {
+          setLoading(false);
         }
       };
       loadProduct();
     }
   }, [id]);
 
-  // Gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Données envoyées :', product);
+    setError(null);
+    setLoading(true);
+    
     try {
       if (id) {
-        // Mise à jour d'un produit existant
         await productService.updateProduit(id, product);
-        console.log('Produit mis à jour');
+        setSuccess('Produit mis à jour avec succès');
       } else {
-        // Création d'un nouveau produit
         await productService.createProduit(product);
-        console.log('Produit créé');
+        setSuccess('Produit créé avec succès');
       }
-      navigate('/products'); // Redirige vers la liste des produits
+      setTimeout(() => navigate('/products'), 1500);
     } catch (error) {
-      console.error('Erreur lors de l\'enregistrement du produit :', error);
+      setError(error.response?.data?.message || 'Erreur lors de la sauvegarde');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Gérer les changements dans les champs du formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct(prev => ({
       ...prev,
-      [name]: name === 'prix' || name === 'quantite' ? parseFloat(value) : value,
+      [name]: name === 'prix' || name === 'quantite' ? parseFloat(value) || 0 : value,
     }));
   };
 
+  const handleCancel = () => {
+    if (window.confirm('Voulez-vous vraiment annuler ? Les modifications non enregistrées seront perdues.')) {
+      navigate('/products');
+    }
+  };
+
+  if (loading) return <Container className="mt-4 text-center">Chargement...</Container>;
+
   return (
     <Container className="mt-4">
-      <h2 className='text-center'>{id ? 'Modifier' : 'Ajouter'} un Produit</h2>
+      <h2 className='text-center mb-4'>{id ? 'Modifier' : 'Ajouter'} un Produit</h2>
+      
+      {error && <Alert variant="danger" className="mb-4">{error}</Alert>}
+      {success && <Alert variant="success" className="mb-4">{success}</Alert>}
+
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <Form.Label>Nom du Produit</Form.Label>
-          <Form.Control
-            type="text"
-            name="nom"
-            value={product.nom}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nom du Produit</Form.Label>
+              <Form.Control
+                type="text"
+                name="nom"
+                value={product.nom}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+          </Col>
+          
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Catégorie</Form.Label>
+              <Form.Select
+                name="categorie"
+                value={product.categorie}
+                onChange={handleChange}
+                required
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Catégorie</Form.Label>
-          <Form.Select
-            name="categorie"
-            value={product.categorie}
-            onChange={handleChange}
-            required
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Prix</Form.Label>
+              <Form.Control
+                type="number"
+                name="prix"
+                value={product.prix}
+                onChange={handleChange}
+                min="0"
+                step="0.01"
+                required
+              />
+            </Form.Group>
+          </Col>
+          
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Quantité</Form.Label>
+              <Form.Control
+                type="number"
+                name="quantite"
+                value={product.quantite}
+                onChange={handleChange}
+                min="0"
+                required
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <div className="d-flex justify-content-end gap-3 mt-4">
+          {id && (
+            <Button 
+              variant="outline-danger" 
+              onClick={handleCancel}
+              disabled={loading}
+            >
+              Annuler
+            </Button>
+          )}
+          <Button 
+            variant="primary" 
+            type="submit"
+            disabled={loading}
           >
-            {categories.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Prix</Form.Label>
-          <Form.Control
-            type="number"
-            name="prix"
-            value={product.prix}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Quantité</Form.Label>
-          <Form.Control
-            type="number"
-            name="quantite"
-            value={product.quantite}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          {id ? 'Modifier' : 'Ajouter'}
-        </Button>
+            {loading ? 'En cours...' : (id ? 'Modifier' : 'Ajouter')}
+          </Button>
+        </div>
       </Form>
     </Container>
   );

@@ -7,7 +7,8 @@ const productService = {
   },
 
   async createProduit(produit) {
-    const response = await api.post('/produits', produit); // Ajouter un produit
+    console.log("Envoi au serveur:", JSON.stringify(produit, null, 2)); // Debug
+    const response = await api.post('/produits', produit);
     return response.data;
   },
 
