@@ -1,0 +1,56 @@
+/* Pour les très petits écrans */
+@media (max-width: 576px) {
+  .dashboard-card {
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboard-icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 0.5rem;
+  }
+  
+  .chart-container {
+    height: 200px !important;
+  }
+}
+
+/* Pour les écrans moyens */
+@media (min-width: 768px) {
+  .dashboard-card {
+    margin-bottom: 0;
+  }
+}
+
+/* Empêcher le texte de se casser dans les cellules du tableau */
+.text-nowrap {
+  white-space: nowrap;
+}
+
+/* Taille de police responsive */
+.small-sm {
+  font-size: 0.8rem;
+}
+
+.register-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-container {
+  font-family: 'Poppins', sans-serif;
+}
+@media (min-width: 576px) {
+  .small-sm {
+    font-size: 1rem;
+  }
+}
+
+.fs-5 {
+  font-size: 1.1rem !important;
+}
+
+@media (min-width: 768px) {
+  .fs-5 {
+    font-size: 1.25rem !important;
+  }
+}
