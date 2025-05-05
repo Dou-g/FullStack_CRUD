@@ -68,44 +68,19 @@ Une application complète de gestion de produits avec un backend Node.js et un f
 product-crud-app/
 ├── client/                     # Frontend (React)
 │   ├── public/                 # Fichiers publics (HTML, favicon, etc.)
-│   │   ├── index.html
 │   ├── src/                    # Code source React
-│   │   ├── components/         # Composants réutilisables
-│   │   │   ├── Navbar.jsx
-│   │   │   ├── Footer.jsx
-│   │   │   └── ProtectedRoute.jsx
-│   │   ├── pages/              # Pages principales
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── ProductList.jsx
-│   │   │   ├── ProductForm.jsx
-│   │   │   └── ProductDashboard.jsx
-│   │   ├── services/           # Services pour les appels API
-│   │   │   ├── api.js
-│   │   │   ├── authService.js
-│   │   │   └── productService.js
-│   │   ├── styles/             # Fichiers CSS
-│   │   │   ├── styles.css
-│   │   ├── App.jsx             # Composant principal
-│   │   ├── index.jsx           # Point d'entrée React
-│   ├── package.json            # Dépendances et scripts du frontend
+│       ├── components/         # Composants réutilisables
+│       ├── pages/              # Pages principales
+│       ├── services/           # Services pour les appels API
+│       ├── styles/             # Fichiers CSS
 ├── server/                     # Backend (Node.js)
 │   ├── config/                 # Configuration (ex. MongoDB)
-│   │   └── db.js
 │   ├── controllers/            # Logique métier
-│   │   ├── authController.js
-│   │   └── productController.js
 │   ├── models/                 # Modèles Mongoose
-│   │   ├── User.js
-│   │   └── Product.js
 │   ├── routes/                 # Routes API
-│   │   ├── auth.js
-│   │   └── produits.js
-│   ├── server.js               # Point d'entrée du backend
-│   ├── package.json            # Dépendances et scripts du backend
+│   ├── middlewares/            # Middlewares (authentification, erreurs)
 ├── .gitignore                  # Fichiers/dossiers à ignorer par Git
 ├── README.md                   # Documentation principale du projet
-└── LICENSE                     # Licence du projet
 
 ---
 
