@@ -27,3 +27,4 @@ Une application complète de gestion de produits avec un backend Node.js et un f
    cd product-crud-app
 2. **Configurer le Backend**
    - Accédez au dossier server :
+     ```cd server```
