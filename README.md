@@ -63,24 +63,34 @@ Une application complète de gestion de produits avec un backend Node.js et un f
 
 ---
 
-## Structure du Projet
+# Structure du projet
 
+```
 product-crud-app/
 ├── client/                     # Frontend (React)
-│   ├── public/                 # Fichiers publics (HTML, favicon, etc.)
-│   ├── src/                    # Code source React
+│   ├── public/                 # Fichiers statiques (HTML, favicon)
+│   └── src/                    # Code source React
 │       ├── components/         # Composants réutilisables
-│       ├── pages/              # Pages principales
-│       ├── services/           # Services pour les appels API
-│       ├── styles/             # Fichiers CSS
-├── server/                     # Backend (Node.js)
-│   ├── config/                 # Configuration (ex. MongoDB)
-│   ├── controllers/            # Logique métier
-│   ├── models/                 # Modèles Mongoose
-│   ├── routes/                 # Routes API
-│   ├── middlewares/            # Middlewares (authentification, erreurs)
-├── .gitignore                  # Fichiers/dossiers à ignorer par Git
-├── README.md                   # Documentation principale du projet
+│       ├── pages/              # Pages de l'application
+│       ├── services/          # Services pour les appels API
+│       └── styles/            # Fichiers CSS/SCSS
+│
+├── server/                    # Backend (Node.js/Express)
+│   ├── config/                # Configuration (DB, variables d'environnement)
+│   ├── controllers/           # Logique métier
+│   ├── models/                # Schémas Mongoose
+│   ├── routes/                # Définition des routes API
+│   └── middlewares/           # Middlewares personnalisés
+│
+├── .gitignore
+├── README.md                  # Documentation du projet
+└── LICENSE
+```
+
+### Légende :
+- **client** : Application React avec architecture modulaire
+- **server** : API REST avec architecture MVC
+- Fichiers racine : Configuration générale du projet
 
 ---
 
