@@ -24,7 +24,7 @@ Une application complète de gestion de produits avec un backend Node.js et un f
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/username/product-crud-app.git
+   git clone https://github.com/Dou-g/FullStack_CRUD.git)
    cd product-crud-app
 2. **Configurer le Backend**
    - Accédez au dossier server :
