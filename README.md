@@ -67,20 +67,20 @@ Une application complète de gestion de produits avec un backend Node.js et un f
 
 ```
 product-crud-app/
-├── client/                     # Frontend (React)
-│   ├── public/                 # Fichiers statiques (HTML, favicon)
-│   └── src/                    # Code source React
-│       ├── components/         # Composants réutilisables
-│       ├── pages/              # Pages de l'application
+├── client/                    # Frontend (React)
+│   ├── public/                # Fichiers statiques (HTML, favicon)
+│   └── src/                   # Code source React
+│       ├── components/        # Composants réutilisables
+│       ├── pages/             # Pages de l'application
 │       ├── services/          # Services pour les appels API
-│       └── styles/            # Fichiers CSS/SCSS
+│       ├── context/           # Contextes React pour l'état global de l'application
+|       └── styles/            # Fichiers CSS/SCSS
 │
 ├── server/                    # Backend (Node.js/Express)
 │   ├── config/                # Configuration (DB, variables d'environnement)
 │   ├── controllers/           # Logique métier
 │   ├── models/                # Schémas Mongoose
-│   ├── routes/                # Définition des routes API
-│   └── middlewares/           # Middlewares personnalisés
+│   └── routes/                # Définition des routes API
 │
 ├── .gitignore
 ├── README.md                  # Documentation du projet
