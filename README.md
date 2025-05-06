@@ -59,7 +59,7 @@ Une application complète de gestion de produits avec un backend Node.js et un f
      npm start
 5. Accéder á l'application
    - Ouvrer votre navigateur et accédez á :
-     ```http://localhost:3000
+     ```http://localhost:3000```
 
 ---
 
