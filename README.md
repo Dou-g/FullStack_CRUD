@@ -39,7 +39,7 @@ Une application complète de gestion de produits avec un backend Node.js et un f
      JWT_SECRET=your_jwt_secret
      JWT_EXPIRE=30d
      PORT=5000
-   #### NB : Remplacer ces données au dessus par vos propres données
+   #### NB : Remplacer **username** par votre nom d'utilisateur qui a accés au base de données et **password** par son mot de passe
 
 3. **Configurer le Frontend**
    - Accéder au dossier client
